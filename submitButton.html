@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0px;
+            padding: 0px;
+            box-sizing:border-box;
+            font-family: "poppins",sans-serif;
+        }
+        body{
+            background-color: rgb(14, 236, 14);
+
+        }
+        .container{
+            width: 31.25em;
+            background-color: aliceblue;
+            padding: 5em 3.75em;
+            position: absolute;
+            transform: translate(-50%,-50%);
+            top: 50%;
+            left: 50%;
+            border-radius: 8px;
+            box-shadow: 0 10px 23px rgba(190, 134, 13, 0.3);
+        }
+        input,#submit{
+            border: none;
+            outline: none;
+            display: block;
+            border-bottom: 2px solid rgb(14, 14, 12);
+        }
+        input{
+            width:100%;
+            background-color: transparent;
+            margin-bottom: 2em;
+            padding: 1em 0 0.5em 0.5em;
+            /* border-bottom: 2px solid blue; */
+        }
+        #submit{
+           position: relative;
+           left:0;
+           font-size: 1.1em;
+           width: 7em;
+           background-color: rgb(21, 234, 21);
+           padding: 0.8em 0 ;
+           margin-top: 2em;
+           border-radius: 5px;
+        }
+        #errmsg{
+            font-size: 0.9em;
+            margin-top: 1.5em;
+            color:rgb(127, 188, 242) ;
+            visibility: hidden;
+        }
+        
+    </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.1/css/fontawesome.min.css" 
+    integrity="sha384-QYIZto+st3yW+o8+5OHfT6S482Zsvz2WfOzpFSXMF9zqeLcFV0/wlZpMtyFcZALm" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container">
+        <input type="email" placeholder="email" id="username">
+        <input type="password" placeholder="password" id="password">
+        <button id='submit'>submit</button>
+        <p id="errmsg">submited succussfully</p>
+    </div>
+    <script>
+var useernameRef=document.getElementById('username');
+var passwordRef = document.getElementById("password");
+var submitBtn=document.getElementById('submit')
+var errormsg=document.getElementById('errmsg');
+
+let Usernamevalid=()=>{
+    var usernameregex=/^[a-zA-Z][a-zA-Z0-9]{3,32}/gi;
+    return usernameregex.test(useernameRef.value);
+
+};
+let passwordvalid=()=>{
+    var passwordregex=/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/gm;
+    
+    return passwordregex.test(passwordRef.value);
+
+}
+useernameRef.addEventListener("input",()=>{
+    if(!Usernamevalid()){
+        errormsg.style.visibility="hidden";
+        useernameRef.style.cssText="border-color:#34bd34;background-color:#c2ffc2"
+}
+else{
+    useernameRef.style.cssText="border-color:#34bd34;background-color:#c2ffc2";
+}
+
+});
+passwordRef.addEventListener("input", () => {
+    if (!passwordvalid()) {
+        errormsg.style.visibility="hidden";
+        passwordRef.style.cssText="border-color:#fe2e2e;background-color:#ffc2c2"
+    }else{
+        passwordRef.style.cssText="border-color:#34bd34;background-color:#c2ffc2";
+
+    }
+});
+submitBtn.addEventListener('mouseover',()=>{
+    if(!Usernamevalid()|| !passwordvalid){
+let containerRect=document.querySelector('.container')
+.getBoundingClientRect();
+let submitRect=submitBtn.getBoundingClientRect();
+let offset=submitRect.left-containerRect.left;
+console.log(offset);
+if(offset<=100){
+    submitBtn.style.transform='translateX(16.25em)';
+}else{
+submitBtn.style.transform="translateX(0)"
+}
+    };
+});
+submitBtn.addEventListener('click',()=>{
+    errormsg.style.visibility='visible';
+})
+            
+    </script>
+</body>
+</html>
